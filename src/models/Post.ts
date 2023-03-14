@@ -3,13 +3,14 @@ import { PostDB, PostModel } from "../types";
 export class Post {
     constructor(
         private id: string,
-        private creatorId: string,
         private content: string,
         private likes: number,
         private dislikes: number,
         private comments: number,
         private createdAt: string,
-        private updatedAt: string
+        private updatedAt: string,
+        private creatorId: string,
+        private creatorName: string
     ) {}
     public getId(): string {
         return this.id
@@ -17,6 +18,14 @@ export class Post {
 
     public setId(value: string): void {
         this.id = value
+    }
+
+    public getContent(): string {
+        return this.content
+    }
+
+    public setContent(value: string): void {
+        this.content = value
     }
 
     public getCreatorId(): string {
@@ -59,6 +68,14 @@ export class Post {
         this.dislikes = value
     }
 
+    public getComments(): number {
+        return this.comments
+    }
+
+    public setComments(value: number): void {
+        this.comments = value
+    }
+
     public getCreatedAt(): string {
         return this.createdAt
     }
@@ -90,16 +107,19 @@ export class Post {
         }
     }
 
-    public toBusinessModel():PostModel{
+    public toBusinessModel(): PostModel{
         return{
             id: this.id,
-            creatorId: this.creatorId,
-            content:this.content,
+            content: this.content,
             likes: this.likes,
             dislikes: this.dislikes,
             comments: this.comments,
             createdAt: this.createdAt,
-            updatedAt: this.updatedAt
+            updatedAt: this.updatedAt,
+            creator: {
+                creatorId: this.creatorId,
+                creatorName: this.creatorName
+            }
         }
     }
 }

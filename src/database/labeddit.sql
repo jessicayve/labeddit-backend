@@ -96,6 +96,19 @@ SELECT * FROM comments;
 
 LEFT JOIN comments ON comments.post_id = posts.id;
 
+SELECT
+    posts.id,
+    posts.creator_id,
+    posts.content,
+    posts.likes,
+    posts.dislikes ,
+    posts.created_at,
+    posts.updated_at,
+    users.name AS creator_name
+FROM posts
+JOIN users
+on posts.creator_id = users.id
+
 
 
 
