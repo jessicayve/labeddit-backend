@@ -14,7 +14,7 @@ export type UserDB = {
     name: string,
     email:string,
     password: string,
-    role:string,
+    role: USER_ROLES,
     created_at:string,
     updated_at:string
 }
@@ -24,7 +24,7 @@ export type UserModel = {
     name: string,
     email:string,
     password: string,
-    role:string,
+    role: USER_ROLES,
     createdAt:string,
     updatedAt:string
 }
@@ -40,15 +40,33 @@ export type PostDB = {
     updated_at:string
 }
 
-export type PostModel = {
+export interface PostWithCreatorDB extends PostDB{
+    creator_name: string
+}
+
+export interface PostModel{
     id: string,
-    creatorId:string,
-    content:string,
-    likes:number,
-    dislikes:number,
-    comments:number,
-    createdAt:string,
-    updatedAt:string
+    content: string,
+    likes: number,
+    dislikes: number,
+    comments: number,
+    createdAt: string,
+    updatedAt: string,
+    creator:{
+        creatorId: string,
+        creatorName: string
+    }
+}
+
+export interface LikeDislikeDB{
+    user_id: string,
+    post_id: string,
+    like: number
+}
+
+export enum POST_LIKE{
+    ALREADY_LIKED = "ALREADY LIKED",
+    ALREADY_DISLIKED = "ALREADY DISLIKED"
 }
 
 export type CommentDB = {
@@ -71,4 +89,18 @@ export type CommentModel = {
     dislikes: number,
     createdAt: string, 
     updatedAt: string
+}
+export interface CommentWithCreatorDB extends CommentDB{
+    creator_name: string
+}
+
+export interface LikeDislikeCommentDB{
+    user_id: string,
+    post_id: string,
+    like: number
+}
+
+export enum COMMENT_LIKE{
+    ALREADY_LIKED = "ALREADY LIKED",
+    ALREADY_DISLIKED = "ALREADY DISLIKED"
 }
