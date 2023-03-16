@@ -1,5 +1,5 @@
 import { UserDatabase } from "../database/UserDatabase"
-import { LoginInputDTO, LoginOutputDTO, SignupInputDTO, SignupOutputDTO } from "../dtos/userDTO";
+import { GetUsersInput, GetUsersOutput, LoginInputDTO, LoginOutputDTO, SignupInputDTO, SignupOutputDTO } from "../dtos/userDTO";
 import { BadRequestError } from "../errors/BadRequestError";
 import { NotFoundError } from "../errors/NotFoundError";
 import { User } from "../models/User";
@@ -115,5 +115,33 @@ export class UserBusiness {
 
         return output
  
+    }
+
+    public getUsers = async (input: GetUsersInput): Promise<GetUsersOutput> =>{
+        const {q} = input
+
+        if(typeof q !== "string" && q !== undefined){
+            throw new BadRequestError("q deve ser uma string")
+        }
+
+        const usersDB = await this.userDatabase.findUsers(q)
+
+        const users = usersDB.map((userDB)=>{
+            const user = new User(
+                userDB.id,
+                userDB.name,
+                userDB.email,
+                userDB.password,
+                userDB.USER_ROLES,
+                userDB.created_at,
+               userDB.updated_at
+               )
+               return user.toBusinessModel()
+              
+        })
+
+       const output:GetUsersOutput = users
+
+       return output
     }
 }

@@ -1,4 +1,6 @@
+import { CommentDatabase } from "../database/CommentDatabase";
 import { PostDatabase } from "../database/PostDatabase";
+import { UserDatabase } from "../database/UserDatabase";
 import { CreatePostInputDTO, DeletePostInputDTO, EditPostInputDTO, GetPostInputDTO, GetPostOutputDTO, LikesDislikesInputDTO } from "../dtos/PostDTO";
 import { BadRequestError } from "../errors/BadRequestError";
 import { NotFoundError } from "../errors/NotFoundError";
@@ -257,5 +259,56 @@ export class PostBusiness {
 
         await this.postDatabase.update(idToLikeOrDislike, updatedPostDB)
 
+    }
+
+    public getPostComment = async (input: GetPostInputDTO) =>{
+        const {token} = input
+        if(token === undefined){
+            throw new BadRequestError("token ausente")
+        }
+
+        const payload = this.tokenManager.getPayload(token)
+
+        if(payload === null){
+            throw new BadRequestError("token inválido")
+        }
+        const posts = await this.postDatabase.getPostWithCreators()
+
+        const userDatabase = new UserDatabase()
+
+        const users = await userDatabase.getUsers()
+
+        const commentsDatabase = new CommentDatabase()
+
+        const comments = await commentsDatabase.getCommentWithCreators()
+
+        const resultPost = posts.map((post)=>{
+            const contador = comments.filter((comment)=>{
+                return comment.post_id === post.id
+
+            })
+
+            return{
+                id: post.id, 
+                content:post.content,
+                likes:post.likes,
+                dislikes: post.dislikes,
+                comments: contador.length,
+                created_at: post.created_at,
+                creator: resultUser(post.creator_id),
+                comentario: contador
+            }
+        })
+        function resultUser(user:string){
+            const resultTable = users.find((result)=>{
+                return user === result.id
+            })
+            return{
+                id: resultTable?.id,
+                name:resultTable?.name
+            }
+        }
+
+        return ({Postagens: resultPost})
     }
 }
