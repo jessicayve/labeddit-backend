@@ -33,7 +33,7 @@ CREATE TABLE comments(
     likes INTEGER DEFAULT(0) NOT NULL, 
     dislikes INTEGER DEFAULT(0) NOT NULL, 
     created_at TEXT NOT NULL,
-    updated_at TEXT NOT NULL,
+    updated_at TEXT,
     FOREIGN KEY (creator_id) REFERENCES users(id)
     FOREIGN key (post_id) REFERENCES posts(id)
     ON DELETE CASCADE
@@ -57,8 +57,12 @@ DROP TABLE likes_dislikes;
 CREATE TABLE likes_dislikes_comments(
     user_id TEXT NOT NULL, 
     comment_id TEXT NOT NULL, 
+    post_id TEXT NOT NULL, 
     like INTEGER NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (post_id) REFERENCES posts(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
     FOREIGN KEY (comment_id) REFERENCES comments(id)
@@ -107,11 +111,22 @@ SELECT
     users.name AS creator_name
 FROM posts
 JOIN users
-on posts.creator_id = users.id
+on posts.creator_id = users.id;
+
+SELECT
+    comments.id,
+    comments.creator_id,
+    comments.content,
+    comments.likes,
+    comments.dislikes ,
+    comments.created_at,
+    comments.updated_at,
+    users.name AS creator_name
+FROM comments
+JOIN users
+on comments.creator_id = users.id;
 
 
-
-
-
+ 
 
 

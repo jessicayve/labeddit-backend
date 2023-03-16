@@ -1,30 +1,22 @@
 import { CommentDB, CommentModel } from "../types"
 
-export class Comment{
+export class Comment {
     constructor(
         private id: string,
-        private creatorId: string,
         private postId: string,
+        private creatorId: string,
         private content: string,
-        private likes: number, 
+        private likes: number,
         private dislikes: number,
-        private createdAt: string, 
-        private updatedAt: string
-    ){}
+        private createdAt: string
+    ) { }
+
     public getId(): string {
         return this.id
     }
 
     public setId(value: string): void {
         this.id = value
-    }
-
-    public getCreatorId(): string {
-        return this.creatorId
-    }
-
-    public setCreatorId(value: string): void {
-        this.creatorId = value
     }
 
     public getPostId(): string {
@@ -41,6 +33,14 @@ export class Comment{
 
     public setContent(value: string): void {
         this.content = value
+    }
+
+    public getCreatorId(): string {
+        return this.creatorId
+    }
+
+    public setCreatorId(value: string): void {
+        this.creatorId = value
     }
 
     public getLikes(): number {
@@ -75,6 +75,7 @@ export class Comment{
         this.dislikes = value
     }
 
+
     public getCreatedAt(): string {
         return this.createdAt
     }
@@ -83,37 +84,27 @@ export class Comment{
         this.createdAt = value
     }
 
-    public getUpdatedAt(): string {
-        return this.updatedAt
-    }
-
-    public setUpdatedAt(value: string): void {
-        this.updatedAt = value
-    }
-   
     public toDBModel(): CommentDB {
         return {
             id: this.id,
-            creator_id: this.creatorId,
             post_id: this.postId,
+            creator_id: this.creatorId,
             content: this.content,
             likes: this.likes,
             dislikes: this.dislikes,
             created_at: this.createdAt,
-            updated_at: this.updatedAt
         }
     }
 
-    public toBusinessModel():CommentModel{
-        return{
+    public toBusinessModel(): CommentModel {
+        return {
             id: this.id,
-            creatorId: this.creatorId,
             postId: this.postId,
-            content:this.content,
+            creatorId: this.creatorId,
+            content: this.content,
             likes: this.likes,
             dislikes: this.dislikes,
             createdAt: this.createdAt,
-            updatedAt: this.updatedAt
         }
     }
 }
