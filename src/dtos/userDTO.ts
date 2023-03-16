@@ -1,3 +1,12 @@
+import { UserModel } from "../types"
+
+
+
+export interface GetUsersInput{
+    q:unknown
+}
+
+export type GetUsersOutput = UserModel[]
 
 export interface SignupInputDTO{
     name: unknown,

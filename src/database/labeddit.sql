@@ -62,7 +62,7 @@ CREATE TABLE likes_dislikes_comments(
     FOREIGN KEY (user_id) REFERENCES users(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-    FOREIGN KEY (post_id) REFERENCES posts(id)
+    FOREIGN KEY (post_id) REFERENCES posts  (id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
     FOREIGN KEY (comment_id) REFERENCES comments(id)
