@@ -4,6 +4,13 @@ import { BaseDatabase } from "./BaseDatabase";
 export class UserDatabase extends BaseDatabase {
     public static TABLE_USERS = "users"
 
+    
+    public getAllUsers = async (): Promise<UserDB[]> => {
+        const result: UserDB[] = await BaseDatabase
+            .connection(UserDatabase.TABLE_USERS)
+        return result
+    }
+
     public insert = async (userDB: UserDB) =>{
         await BaseDatabase
         .connection(UserDatabase.TABLE_USERS)

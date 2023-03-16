@@ -9,7 +9,7 @@ export interface TokenPayload{
     role:USER_ROLES
 }
 
-export type UserDB = {
+export interface UserDB {
     id: string,
     name: string,
     email:string,
@@ -19,7 +19,7 @@ export type UserDB = {
     updated_at:string
 }
 
-export type UserModel = {
+export interface UserModel {
     id: string,
     name: string,
     email:string,
@@ -29,7 +29,7 @@ export type UserModel = {
     updatedAt:string
 }
 
-export type PostDB = {
+export interface PostDB {
     id: string,
     creator_id:string,
     content:string,
@@ -69,38 +69,39 @@ export enum POST_LIKE{
     ALREADY_DISLIKED = "ALREADY DISLIKED"
 }
 
-export type CommentDB = {
+export interface CommentDB {
     id: string,
+    post_id: string,
     creator_id: string,
-    post_id:string,
     content: string,
-    likes: number, 
+    likes: number,
     dislikes: number,
-    created_at: string, 
-    updated_at: string
+    created_at: string
 }
 
-export type CommentModel = {
-    id: string,
-    creatorId: string,
-    postId:string,
-    content: string,
-    likes: number, 
-    dislikes: number,
-    createdAt: string, 
-    updatedAt: string
-}
-export interface CommentWithCreatorDB extends CommentDB{
+
+export interface CommentWithCreatorDB extends CommentDB {
     creator_name: string
 }
 
-export interface LikeDislikeCommentDB{
-    user_id: string,
-    post_id: string,
-    like: number
+export interface CommentModel {
+    id: string,
+    postId: string,
+    creatorId: string,
+    content: string,
+    likes: number,
+    dislikes: number,
+    createdAt: string
 }
 
+export interface LikeDislikeCommentDB {
+    post_id: string,
+    comment_id: string,
+    user_id: string,
+    like: number
+}
 export enum COMMENT_LIKE{
     ALREADY_LIKED = "ALREADY LIKED",
     ALREADY_DISLIKED = "ALREADY DISLIKED"
+
 }

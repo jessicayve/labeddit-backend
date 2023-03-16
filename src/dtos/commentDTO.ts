@@ -1,29 +1,29 @@
-import { CommentModel } from "../types";
+import { CommentModel } from "../types"
 
+export interface GetCommentInputDTO {
+    
+    token: string | undefined
+}
 
-export interface GetCommentInputDTO{
+export interface GetCommentsInputDTO {
+    
     token: string | undefined
 }
 
 export type GetCommentOutputDTO = CommentModel[]
 
 export interface CreateCommentInputDTO {
-    token: string | undefined
-}
-
-export interface EditCommentInputDTO {
-    idToEdit:string,
+    postId: string,
     token: string | undefined,
     content: unknown
 }
 
-export interface DeleteCommentInputDTO{
-    idToDelete:string,
-    token: string | undefined,
-    
+export interface CreateCommentOutputDTO {
+    message: string,
+    content: string
 }
 
-export interface LikeDislikeCommentInputDTO{
+export interface LikeDislikeCommentInputDTO {
     idToLikeOrDislike: string,
     token: string | undefined,
     like: unknown
